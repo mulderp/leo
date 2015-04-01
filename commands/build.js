@@ -24,9 +24,10 @@ module.exports.setup = function(program){
 
 function run(env){
 
-  if (env.verbose > 1) {
-    console.log('** config ide');
-    console.log(config.ide);
+  var verbosity = env.verbose;
+  if (verbosity > 1) {
+    out.log('** config ide');
+    out.log(config.ide);
   }
 
   if(config.ide.path === ''){
@@ -47,6 +48,7 @@ function run(env){
 
   // Setup build 
   var env = board.platform(config, board.build, board);
+  env.verbose = verbosity;
 
   var b = new LeoBuild(env);
   b.build('.',function(err){
