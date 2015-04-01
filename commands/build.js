@@ -5,17 +5,29 @@ var boards = require('../boards')
 
 var Program = null;
 
+function increaseVerbosity(v,total){
+  out.verbose(v);
+  return v;
+}
+
 module.exports.setup = function(program){
+
   program
     .command('build')
     .description('Build firmware for the project in the current directory.')
     .option('-b, --board [board]', 'Board name to compile and upload for. See `leo boards`')
+    .option('-v, --verbose [value]', 'Verbose level', increaseVerbosity, 1)
     .action(run);
 
   Program = program;
 };
 
 function run(env){
+
+  if (env.verbose > 1) {
+    console.log('** config ide');
+    console.log(config.ide);
+  }
 
   if(config.ide.path === ''){
     out.error('Unable to find Arduino IDE path. You can set it manually by running `leo config set ide.path \'/some/path\'`');

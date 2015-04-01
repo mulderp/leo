@@ -8,12 +8,14 @@ var out = require('./lib/output');
 program
   .version(pkg.version);
 
+// Load command from directory as modules
 function requireCommand(f){
   var m = require(path.join(__dirname,'./commands',f));
 
   if(!m.setup || typeof m.setup !== 'function')
     throw new Error('Command must export setup as a function.')
 
+  // call module setup for command
   m.setup(program);
 
   return m;
@@ -27,7 +29,6 @@ function increaseVerbosity(v,total){
 }
 
 program
-  .option('-v, --verbose [value]', 'Verbose level', increaseVerbosity, 1)
   .command('*')
   .action(function(env){
     out.error('Command not found');
