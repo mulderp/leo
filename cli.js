@@ -28,6 +28,7 @@ function increaseVerbosity(v,total){
   return v;
 }
 
+// no valid command  --> display help
 program
   .command('*')
   .action(function(env){
@@ -37,5 +38,6 @@ program
 
 program.parse(process.argv);
 
+// no command  --> display help
 if(program.args.length === 0)
   return program.help();
